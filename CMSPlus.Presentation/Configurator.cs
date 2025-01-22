@@ -29,6 +29,7 @@ public static class Configurator
         {
             //todo read via reflection
             cfg.AddProfile<TopicProfile>();
+            cfg.AddProfile<CommentProfile>();
         }, typeof(Program).Assembly);
     }
 }
