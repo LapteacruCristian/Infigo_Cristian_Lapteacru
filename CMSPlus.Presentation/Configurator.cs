@@ -1,3 +1,4 @@
+using CMSPlus.Domain.Models.CommentModels;
 using CMSPlus.Domain.Models.TopicModels;
 using CMSPlus.Domain.Persistance;
 using CMSPlus.Presentation.AutoMapperProfiles;
@@ -15,6 +16,7 @@ public static class Configurator
         services.AddScoped<TopicValidatorHelpers>();
         services.AddScoped<IValidator<TopicCreateModel>, TopicCreateModelValidator>();
         services.AddScoped<IValidator<TopicEditModel>, TopicEditModelValidator>();
+        services.AddScoped<IValidator<CommentCreateModel>, CommentCreateModelValidator>();
         services.AddControllersWithViews();
         services.AddValidatorsFromAssemblyContaining<TopicEditModelValidator>();
         services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)

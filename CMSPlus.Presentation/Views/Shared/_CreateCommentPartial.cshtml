@@ -1,0 +1,18 @@
+﻿@model CMSPlus.Domain.Models.CommentModels.CommentCreateModel
+
+<h4 class="mt-4">Add a Comment</h4>
+<p class="col-10">@Html.ValidationSummary()</p>
+<form method="post" asp-controller="Comment" asp-action="Create">
+    <div class="form-group">
+        <input type="hidden" asp-for="TopicId" />
+        <input type="hidden" asp-for="TopicSystemName" />
+        <label asp-for="FullName" class="m-1">Full name:</label>
+        <input asp-for="FullName" type="text" class="form-control" required></input>
+        <label asp-for="CommentText" class="m-1">Comment:</label>
+        <textarea asp-for="CommentText" class="form-control" required></textarea>
+    </div>
+    <div class="row-12 m-3 text-center">
+        <button type="submit" class="btn btn-primary" style="width: 10%">Add</button>
+    </div>
+</form>
+
