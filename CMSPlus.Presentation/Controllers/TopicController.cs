@@ -5,19 +5,23 @@ using CMSPlus.Domain.Models.TopicModels;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using CMSPlus.Services;
+using CMSPlus.Domain.Models.CommentModels;
 
 namespace CMSPlus.Presentation.Controllers;
 
 public class TopicController : Controller
 {
     private readonly ITopicService _topicService;
+    private readonly ICommentService _commentService;
     private readonly IMapper _mapper;
     private readonly IValidator<TopicEditModel> _editModelValidator;
     private readonly IValidator<TopicCreateModel> _createModelValidator;
 
-    public TopicController(ITopicService topicService,IMapper mapper, IValidator<TopicEditModel> editModelValidator, IValidator<TopicCreateModel> createModelValidator)
+    public TopicController(ITopicService topicService, ICommentService commentService, IMapper mapper, IValidator<TopicEditModel> editModelValidator, IValidator<TopicCreateModel> createModelValidator)
     {
         _topicService = topicService;
+        _commentService = commentService;
         _mapper = mapper;
         _editModelValidator = editModelValidator;
         _createModelValidator = createModelValidator;
@@ -105,7 +109,9 @@ public class TopicController : Controller
         {
             throw new ArgumentException($"Item with system name: {systemName} wasn't found!");
         }
+        var comments = await _commentService.GetByTopicId(topic.Id);
         var topicDto = _mapper.Map<TopicEntity, TopicDetailsModel>(topic);
+        topicDto.Comments = comments.Select(comment => _mapper.Map<CommentEntity, CommentModel>(comment)).ToList();
         return View(topicDto);
     }
 }
